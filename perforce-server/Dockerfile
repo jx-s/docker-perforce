@@ -5,7 +5,7 @@ ARG P4_VERSION
 
 RUN yum clean all --enablerepo='*' \
     && yum clean metadata --enablerepo='*' \
-    && yum install --enablerepo=perforce -y helix-p4d-20${P4_VERSION} helix-cli-20${P4_VERSION} \
+    && yum install --enablerepo=perforce -y helix-p4d-2020.1 helix-cli-2020.1 \
     && yum clean all --enablerepo='*' \
     && rm -rf /var/cache/yum
 

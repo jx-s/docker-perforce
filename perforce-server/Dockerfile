@@ -5,14 +5,14 @@ ARG P4_VERSION
 
 RUN yum clean all --enablerepo='*' \
     && yum clean metadata --enablerepo='*' \
-    && yum install --enablerepo=perforce -y helix-p4d-2020.1 helix-cli-2020.1 \
+    && yum install --enablerepo=perforce -y helix-p4d helix-cli \
     && yum clean all --enablerepo='*' \
     && rm -rf /var/cache/yum
 
 
 EXPOSE 1666
 ENV NAME p4depot
-ENV P4CONFIG .p4config
+ENV P4CONFIG envfile
 ENV DATAVOLUME /data
 ENV P4PORT 1666
 ENV P4USER p4admin

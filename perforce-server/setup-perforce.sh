@@ -27,7 +27,7 @@ for DIR in $P4ROOT $P4SSLDIR; do
 done
 
 if ! p4dctl list 2>/dev/null | grep -q $NAME; then
-    /opt/perforce/sbin/configure-helix-p4d.sh $NAME -n -p $P4PORT -r $P4ROOT -u $P4USER -P "${P4PASSWD}" --case $CASE_INSENSITIVE
+    /opt/perforce/sbin/configure-helix-p4d.sh $NAME -n -p $P4PORT -r $P4ROOT -u $P4USER -P "${P4PASSWD}" --case 1
 fi
 
 p4dctl start -t p4d $NAME

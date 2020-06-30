@@ -3,6 +3,14 @@ set -e
 export NAME="${NAME:-p4depot}"
 export CASE_INSENSITIVE="${CASE_INSENSITIVE:-0}"
 export P4ROOT="${DATAVOLUME}/${NAME}"
+export UESRID="${UID}"
+export GROUPID="${GID}"
+
+# useradd -r -u $UESRID -g $GROUPID perforce
+usermod -u $UESRID perforce && groupmod -g $GROUPID perforce
+
+# find / -user 999 -exec chown -h perforce {} \;
+# find / -group 998 -exec chgrp -h perforce {} \;
 
 if [ ! -d $DATAVOLUME/etc ]; then
     echo >&2 "First time installation, copying configuration from /etc/perforce to $DATAVOLUME/etc and relinking"
@@ -27,7 +35,7 @@ for DIR in $P4ROOT $P4SSLDIR; do
 done
 
 if ! p4dctl list 2>/dev/null | grep -q $NAME; then
-    /opt/perforce/sbin/configure-helix-p4d.sh $NAME -n -p $P4PORT -r $P4ROOT -u $P4USER -P "${P4PASSWD}" --case $CASE_INSENSITIVE
+    /opt/perforce/sbin/configure-helix-p4d.sh $NAME -n -p $P4PORT -r $P4ROOT -u $P4USER -P "${P4PASSWD}" --unicode --case $CASE_INSENSITIVE
 fi
 
 p4dctl start -t p4d $NAME
@@ -35,13 +43,13 @@ if echo "$P4PORT" | grep -q '^ssl:'; then
     p4 trust -y
 fi
 
-cat > ~perforce/envfile <<EOF
+cat > ~perforce/.p4config <<EOF
 P4USER=$P4USER
 P4PORT=$P4PORT
 P4PASSWD=$P4PASSWD
 EOF
-chmod 0600 ~perforce/envfile
-chown perforce:perforce ~perforce/envfile
+chmod 0600 ~perforce/.p4config
+chown perforce:perforce ~perforce/.p4config
 
 p4 login <<EOF
 $P4PASSWD

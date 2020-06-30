@@ -12,15 +12,19 @@ RUN yum clean all --enablerepo='*' \
 
 EXPOSE 1666
 ENV NAME p4depot
-ENV P4CONFIG envfile
+ENV P4CONFIG .p4config
 ENV DATAVOLUME /data
 ENV P4PORT 1666
 ENV P4USER p4admin
+ENV UID 1026
+ENV GID 100
 VOLUME ["$DATAVOLUME"]
 
 ADD ./p4-users.txt /root/
 ADD ./p4-groups.txt /root/
 ADD ./p4-protect.txt /root/
+ADD ./p4dctl.conf /etc/perforce/
+ADD ./p4d.template /etc/perforce/p4dctl.conf.d/
 ADD ./setup-perforce.sh /usr/local/bin/
 ADD ./run.sh  /
 

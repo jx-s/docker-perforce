@@ -6,13 +6,11 @@ export P4ROOT="${DATAVOLUME}/${NAME}"
 export UESRID="${UID}"
 export GROUPID="${GID}"
 
-# useradd -r -u $UESRID -g $GROUPID perforce
-usermod -u $UESRID perforce && groupmod -g $GROUPID perforce
-
-# find / -user 999 -exec chown -h perforce {} \;
-# find / -group 998 -exec chgrp -h perforce {} \;
 
 if [ ! -d $DATAVOLUME/etc ]; then
+    usermod -u $UESRID perforce && groupmod -g $GROUPID perforce
+    # find / -user 999 -exec chown -h perforce {} \;
+    # find / -group 998 -exec chgrp -h perforce {} \;
     echo >&2 "First time installation, copying configuration from /etc/perforce to $DATAVOLUME/etc and relinking"
     mkdir -p $DATAVOLUME/etc
     cp -r /etc/perforce/* $DATAVOLUME/etc/

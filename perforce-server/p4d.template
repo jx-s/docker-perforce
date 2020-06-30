@@ -5,7 +5,7 @@
 p4d %NAME%
 {
     Owner    =	perforce
-    Execute  =	/usr/local/sbin/p4d
+    Execute  =	/opt/perforce/sbin/p4d
     Umask    =	077
 
     # Enabled by default.

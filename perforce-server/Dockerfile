@@ -1,5 +1,5 @@
 FROM ambakshi/perforce-base
-MAINTAINER Amit Bakshi <ambakshi@gmail.com>
+LABEL maintainer="Fahasiki Jx <sunjianxin0207@gmail.com>"
 
 ARG P4_VERSION
 
